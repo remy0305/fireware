@@ -1,0 +1,2 @@
+The LSTM and RTC have similar architecture. They use the same driver,
+"ht32fxxxxx_rtc.c/.h" to save the code size. For those timers, please refet to the RTC driver/example.

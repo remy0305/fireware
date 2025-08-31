@@ -1,0 +1,69 @@
+/*********************************************************************************************************//**
+ * @file    BMV31T001_HT32/BMV31T001_porting_guide.txt
+ * @version V1.0.1
+ * @date    2024-08-01
+ * @brief   Description of BestModules BMV31T001porting guide.
+ *************************************************************************************************************
+ * @attention
+ *
+ * Firmware Disclaimer Information
+ *
+ * 1. The customer hereby acknowledges and agrees that the program technical documentation, including the
+ *    code, which is supplied by Holtek Semiconductor Inc., (hereinafter referred to as "HOLTEK") is the
+ *    proprietary and confidential intellectual property of HOLTEK, and is protected by copyright law and
+ *    other intellectual property laws.
+ *
+ * 2. The customer hereby acknowledges and agrees that the program technical documentation, including the
+ *    code, is confidential information belonging to HOLTEK, and must not be disclosed to any third parties
+ *    other than HOLTEK and the customer.
+ *
+ * 3. The program technical documentation, including the code, is provided "as is" and for customer reference
+ *    only. After delivery by HOLTEK, the customer shall use the program technical documentation, including
+ *    the code, at their own risk. HOLTEK disclaims any expressed, implied or statutory warranties, including
+ *    the warranties of merchantability, satisfactory quality and fitness for a particular purpose.
+ *
+ * <h2><center>Copyright (C) Holtek Semiconductor Inc. All rights reserved</center></h2>
+ ************************************************************************************************************/
+
+
+
+ ===========================Steps for porting BMV31T001 Module to HT32 Starter Kit.===========================
+ Step 1. Modify example_xxxxx\_ProjectConfig.ini.
+         - Add DEVICE_NAME
+         Example [take HT32F52352 as an example]:
+           REM DEVICE_NAME
+           REM ============================================================================
+           52352
+
+ Step 2. Modify example_xxxxx\ht32_board_config.h.
+         - Add module communication interface pin setting
+         Example [take HT32F52352 as an example]:
+            #if defined(USE_HT32F52352_SK)
+            
+
+ ===========================Steps for porting BMV31T001 Module to Another Vendor's MCU.=======================
+ Step 1. Unzip File:
+         - Start by unzipping "BMV31T001_HT32_Vm.n.r.zip".
+
+ Step 2. Port Source Code:
+         - Migrate the src directory to your target project.
+
+ Step 3. Include in Compilation:
+         - Open the Keil project and add src to your project.
+	 - Add include path on your project target setting.
+
+ Step 4. Modify src:
+         1- delay.c,the BFTM0 clock adapte to your target MCU
+		(1) delay_us(u32 nus)	
+	 2- BMV31T001.c Change Port adapte to your connected wire.on defined area.
+		
+	 3- BMV31T001.c If you need to update voice source.ReWrite the Serial funtion
+		(1)USBSerial_begin(baudrate);defaulted is Vitrue Serial
+                (2)USBSerial_available()
+		(3)USBSerial_readBytes(param1,param2);
+		(4)USBSerial_write_byte(param);
+	  
+          
+		
+
+ 

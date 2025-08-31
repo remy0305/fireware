@@ -1,0 +1,47 @@
+./ht32/53a367a/obj/bmd31m090.o: ..\..\src\BMD31M090.c \
+  ..\..\src\BMD31M090.h ..\..\src\utility\fontTable.h \
+  ..\..\..\..\library\HT32F5xxxx_Driver\inc\ht32.h \
+  ..\..\..\..\library\Device\Holtek\HT32F5xxxx\Include\ht32f5xxxx_01.h \
+  ..\..\..\..\library\HT32F5xxxx_Driver\inc\ht32_config.h \
+  ..\..\..\..\library\CMSIS\Include\core_cm0plus.h \
+  ..\..\..\..\library\Device\Holtek\HT32F5xxxx\Include\system_ht32f5xxxx_01.h \
+  ..\..\..\..\library\HT32F5xxxx_Driver\inc\ht32f5xxxx_lib.h \
+  ..\..\..\..\library\HT32F5xxxx_Driver\inc\ht32f52357_67_libcfg.h \
+  ..\ht32f5xxxx_conf.h \
+  ..\..\..\..\library\HT32F5xxxx_Driver\inc\ht32f5xxxx_adc.h \
+  ..\..\..\..\library\HT32F5xxxx_Driver\inc\ht32f5xxxx_aes.h \
+  ..\..\..\..\library\HT32F5xxxx_Driver\inc\ht32f5xxxx_bftm.h \
+  ..\..\..\..\library\HT32F5xxxx_Driver\inc\ht32f5xxxx_ckcu.h \
+  ..\..\..\..\library\HT32F5xxxx_Driver\inc\ht32f5xxxx_cmp.h \
+  ..\..\..\..\library\HT32F5xxxx_Driver\inc\ht32f5xxxx_crc.h \
+  ..\..\..\..\library\HT32F5xxxx_Driver\inc\ht32f5xxxx_dac.h \
+  ..\..\..\..\library\HT32F5xxxx_Driver\inc\ht32f5xxxx_div.h \
+  ..\..\..\..\library\HT32F5xxxx_Driver\inc\ht32f5xxxx_ebi.h \
+  ..\..\..\..\library\HT32F5xxxx_Driver\inc\ht32f5xxxx_exti.h \
+  ..\..\..\..\library\HT32F5xxxx_Driver\inc\ht32f5xxxx_flash.h \
+  ..\..\..\..\library\HT32F5xxxx_Driver\inc\ht32f5xxxx_gpio.h \
+  ..\..\..\..\library\HT32F5xxxx_Driver\inc\ht32f5xxxx_tm_type.h \
+  ..\..\..\..\library\HT32F5xxxx_Driver\inc\ht32f5xxxx_tm.h \
+  ..\..\..\..\library\HT32F5xxxx_Driver\inc\ht32f5xxxx_i2c.h \
+  ..\..\..\..\library\HT32F5xxxx_Driver\inc\ht32f5xxxx_i2s.h \
+  ..\..\..\..\library\HT32F5xxxx_Driver\inc\ht32f5xxxx_mctm.h \
+  ..\..\..\..\library\HT32F5xxxx_Driver\inc\ht32f5xxxx_pdma.h \
+  ..\..\..\..\library\HT32F5xxxx_Driver\inc\ht32f5xxxx_pwrcu.h \
+  ..\..\..\..\library\HT32F5xxxx_Driver\inc\ht32f5xxxx_rstcu.h \
+  ..\..\..\..\library\HT32F5xxxx_Driver\inc\ht32f5xxxx_rtc.h \
+  ..\..\..\..\library\HT32F5xxxx_Driver\inc\ht32f5xxxx_sci.h \
+  ..\..\..\..\library\HT32F5xxxx_Driver\inc\ht32f5xxxx_spi.h \
+  ..\..\..\..\library\HT32F5xxxx_Driver\inc\ht32f5xxxx_usart.h \
+  ..\..\..\..\library\HT32F5xxxx_Driver\inc\ht32f5xxxx_usbd.h \
+  ..\ht32f5xxxx_01_usbdconf.h \
+  ..\..\..\..\library\HT32F5xxxx_Driver\inc\ht32f5xxxx_usbdinit.h \
+  ..\..\..\..\library\HT32F5xxxx_Driver\inc\ht32_retarget_usbdconf.h \
+  ..\..\..\..\library\HT32F5xxxx_Driver\inc\ht32f5xxxx_wdt.h \
+  ..\..\..\..\library\HT32F5xxxx_Driver\inc\ht32_cm0plus_misc.h \
+  ..\..\..\..\library\HT32F5xxxx_Driver\inc\ht32_serial.h \
+  ..\..\..\..\library\HT32F5xxxx_Driver\inc\ht32_div.h \
+  ..\..\..\..\library\HT32F5xxxx_Driver\inc\ht32_rand.h \
+  ..\i2c_master_config.h ..\ht32_board_config.h \
+  ..\..\..\..\utilities\bmduino_board.h \
+  ..\..\..\..\utilities\bmduino_check.h \
+  ..\..\..\..\utilities\middleware\i2c_master.h

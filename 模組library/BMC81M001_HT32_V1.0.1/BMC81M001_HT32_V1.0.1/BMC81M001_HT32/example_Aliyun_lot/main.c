@@ -1,0 +1,112 @@
+/*********************************************************************************************************//**
+ * @file    BMC81M001.h_HT32/example_Aliyun_lot/main.c
+ * @version V1.0.1
+ * @date    2024-010-10
+ * @brief   Main program.
+ *************************************************************************************************************
+ * @attention
+ *
+ * Firmware Disclaimer Information
+ *
+ * 1. The customer hereby acknowledges and agrees that the program technical documentation, including the
+ *    code, which is supplied by Holtek Semiconductor Inc., (hereinafter referred to as "HOLTEK") is the
+ *    proprietary and confidential intellectual property of HOLTEK, and is protected by copyright law and
+ *    other intellectual property laws.
+ *
+ * 2. The customer hereby acknowledges and agrees that the program technical documentation, including the
+ *    code, is confidential information belonging to HOLTEK, and must not be disclosed to any third parties
+ *    other than HOLTEK and the customer.
+ *
+ * 3. The program technical documentation, including the code, is provided "as is" and for customer reference
+ *    only. After delivery by HOLTEK, the customer shall use the program technical documentation, including
+ *    the code, at their own risk. HOLTEK disclaims any expressed, implied or statutory warranties, including
+ *    the warranties of merchantability, satisfactory quality and fitness for a particular purpose.
+ *
+ * <h2><center>Copyright (C) Holtek Semiconductor Inc. All rights reserved</center></h2>
+ ************************************************************************************************************/
+
+/* Includes ------------------------------------------------------------------------------------------------*/
+
+#include "BMC81M001.h"
+
+/* Settings ------------------------------------------------------------------------------------------------*/
+/* Private types -------------------------------------------------------------------------------------------*/
+/* Private constants ---------------------------------------------------------------------------------------*/
+/* Private function prototypes -----------------------------------------------------------------------------*/
+/* Private macro -------------------------------------------------------------------------------------------*/
+
+/* Global variables ----------------------------------------------------------------------------------------*/
+
+#define WIFI_SSID "Hun"
+#define WIFI_PASS "kjxxcr520"
+
+#define CLIENTLID  "hj3hM0mUhMj.Arduino_Wifi|securemode=2\\,signmethod=hmacsha256\\,timestamp=1686301854527|"        
+#define USERNAME  "Arduino_Wifi&hj3hM0mUhMj"                                           
+#define PASSWORD  "ec6b343cb06f76eba5c999d04ba36df0223f3636ca9ed9ddea987622036f9168"                              
+#define MQTT_HOST "iot-06z00ac1cwfkn1s.mqtt.iothub.aliyuncs.com"  
+#define SERVER_PORT 1883
+
+#define PUBLISHTOPIC "hj3hM0mUhMj/Arduino_Wifi/user/update"                    
+#define SUBSCRIBERTOPIC "hj3hM0mUhMj/Arduino_Wifi/user/get"
+#define CUSTOMTOPIC "hj3hM0mUhMj/Arduino_Wifi/user/ardunio" 
+
+
+char writeDataBuff[10]="Hello";
+char readDataBuff[200];
+char readTopic[30];
+int readDataBufflen;
+/* Private variables ---------------------------------------------------------------------------------------*/
+/* Global functions ----------------------------------------------------------------------------------------*/
+void _delay(vu32 count);
+/*********************************************************************************************************//**
+  * @brief  Main program.
+  * @retval None
+  ***********************************************************************************************************/
+int main(void)
+{
+	RETARGET_Configuration();           //Initialise the serial monitor with a baud rate of 115200
+	BMC81M001_Init(BMC81M001_baudRate); // Module initialization using UART communication.
+	BMC81M001_connectToAP(WIFI_SSID,WIFI_PASS);
+  BMC81M001_sendATCommand("AT+CIPSNTPCFG=1,8,\"ntp1.aliyun.com\"\r\n",3);
+	printf("Aliyun Connection Results:");
+	if(BMC81M001_configMqtt(CLIENTLID, USERNAME, PASSWORD, MQTT_HOST, SERVER_PORT) == true) 
+	{
+    printf("success\r\n");
+		BMC81M001_setPublishTopic(PUBLISHTOPIC);
+    BMC81M001_setSubscribetopic(SUBSCRIBERTOPIC);
+  } 
+	else 
+	{
+    printf("fail\r\n");
+	}
+	printf("Topic set Results:");
+  if(BMC81M001_setTopic(CUSTOMTOPIC) == true) 
+	{
+    printf("success\r\n");
+  } 
+	else 
+	{
+    printf("fail\r\n");
+	}
+	BMC81M001_writeByte(writeDataBuff,5,CUSTOMTOPIC);
+	while(1)
+	{
+    BMC81M001_readIotData(readDataBuff,&readDataBufflen,readTopic);
+		if(readDataBufflen>0)
+    {
+			printf("%s\r\n",readDataBuff);		
+	    BMC81M001_writeByte("received",8,CUSTOMTOPIC);
+    }
+	}
+}
+
+/*********************************************************************************************************//**
+ * @brief  delay ms.
+ * @param  count
+ * @retval void
+ ************************************************************************************************************/
+void _delay(vu32 count)
+{
+  count = SystemCoreClock / 8000 * count;
+  while(count--);
+}

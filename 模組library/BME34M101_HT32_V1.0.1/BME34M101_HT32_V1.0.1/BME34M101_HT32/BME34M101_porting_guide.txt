@@ -1,0 +1,103 @@
+/*********************************************************************************************************//**
+ * @file    BME34M101_HT32/BME34M101_porting_guide.txt
+ * @version V1.0.1
+ * @date    2024-10-10
+ * @brief   Description of BestModules BME34M101 porting guide.
+ *************************************************************************************************************
+ * @attention
+ *
+ * Firmware Disclaimer Information
+ *
+ * 1. The customer hereby acknowledges and agrees that the program technical documentation, including the
+ *    code, which is supplied by Holtek Semiconductor Inc., (hereinafter referred to as "HOLTEK") is the
+ *    proprietary and confidential intellectual property of HOLTEK, and is protected by copyright law and
+ *    other intellectual property laws.
+ *
+ * 2. The customer hereby acknowledges and agrees that the program technical documentation, including the
+ *    code, is confidential information belonging to HOLTEK, and must not be disclosed to any third parties
+ *    other than HOLTEK and the customer.
+ *
+ * 3. The program technical documentation, including the code, is provided "as is" and for customer reference
+ *    only. After delivery by HOLTEK, the customer shall use the program technical documentation, including
+ *    the code, at their own risk. HOLTEK disclaims any expressed, implied or statutory warranties, including
+ *    the warranties of merchantability, satisfactory quality and fitness for a particular purpose.
+ *
+ * <h2><center>Copyright (C) Holtek Semiconductor Inc. All rights reserved</center></h2>
+ ************************************************************************************************************/
+
+ ===========================Steps for porting BME34M101 Module to HT32 Starter Kit.===========================
+ Step 1. Modify example_xxxxx\_ProjectConfig.ini.
+         - Add DEVICE_NAME
+         Example [take HT32F52352 as an example]:
+           REM DEVICE_NAME
+           REM ============================================================================
+           52352
+
+ Step 2. Modify example_xxxxx\ht32_board_config.h.
+         - Add module communication interface pin setting
+         Example [take HT32F52352 as an example]:
+            #if defined(USE_HT32F52352_SK)
+            /*----------------------------------------------------------------------------------------------------------*/
+            /* UART Module Setting                                                                                      */
+            /*----------------------------------------------------------------------------------------------------------*/
+              #define HTCFG_UARTM_CH0                         USART1
+              #define HTCFG_UARTM0_TX_GPIO_PORT               A
+              #define HTCFG_UARTM0_TX_GPIO_PIN                4
+              #define HTCFG_UARTM0_RX_GPIO_PORT               A
+              #define HTCFG_UARTM0_RX_GPIO_PIN                5
+              #define HTCFG_UARTM0_TX_BUFFER_SIZE             128
+              #define HTCFG_UARTM0_RX_BUFFER_SIZE             128
+
+            /*----------------------------------------------------------------------------------------------------------*/
+            /* SPI Module Setting                                                                                       */
+            /*----------------------------------------------------------------------------------------------------------*/
+              #define HTCFG_CH0_SCK_GPIO_PORT                 B
+              #define HTCFG_CH0_SCK_GPIO_PIN                  3
+              #define HTCFG_CH0_SEL_GPIO_PORT                 B
+              #define HTCFG_CH0_SEL_GPIO_PIN                  2
+              #define HTCFG_CH0_MOSI_GPIO_PORT                B
+              #define HTCFG_CH0_MOSI_GPIO_PIN                 4
+              #define HTCFG_CH0_MISO_GPIO_PORT                B
+              #define HTCFG_CH0_MISO_GPIO_PIN                 5
+              #define HTCFG_SPI_CH0                           SPI0
+
+            /*----------------------------------------------------------------------------------------------------------*/
+            /* I2C Master Setting                                                                                       */
+            /*----------------------------------------------------------------------------------------------------------*/
+              #define HTCFG_I2CM_CH0                          I2C1
+              #define HTCFG_M0_SCL_GPIO_PORT                  A
+              #define HTCFG_M0_SCL_GPIO_PIN                   0
+              #define HTCFG_M0_SDA_GPIO_PORT                  A
+              #define HTCFG_M0_SDA_GPIO_PIN                   1
+            #endif
+
+ ===========================Steps for porting BME34M101 Module to Another Vendor's MCU.=======================
+ Step 1. Unzip File:
+         - Start by unzipping "BME34M101_HT32_Vm.n.r.zip".
+
+ Step 2. Port Source Code:
+         - Migrate the src directory to your target project.
+         Example: D:\<Another Vendor's MCU Target Project>\src
+
+ Step 3. Include in Compilation:
+         - Open the Keil project and make modifications as below.
+         (Ensure "BME34M101.c" and header files are included in your project's build list.)
+         1. Add the module "Include Paths" to the project.
+            Example: D:\<Another Vendor's MCU Target Project>\src
+         2. Add the module "C language files" to the project.
+            Example: BME34M101.c
+
+ Step 4. Modify Includes and APIs:
+         - Use global search to identify and modify include files and APIs for porting.
+         /*
+           !!! PORTING !!!
+           Description...
+         */
+         Note : Porting this module need to implement required APIs as below:
+         -       API        :           Description         -
+         ====================================================
+         - BME34M101_selSerial()  : Module UART communication interface pin change.
+         - BME34M101_Init()       : Module initialization using UART communication.
+         - BME34M101_writeBytes() : write data through UART.
+         - BME34M101_readBytes()  : read data through UART.
+         - _BME34M101_delay()     : delay ms.

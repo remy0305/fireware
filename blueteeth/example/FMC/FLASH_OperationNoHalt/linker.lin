@@ -1,0 +1,38 @@
+;/*---------------------------------------------------------------------------------------------------------*/
+;/* Holtek Semiconductor Inc.                                                                               */
+;/*                                                                                                         */
+;/* Copyright (C) Holtek Semiconductor Inc.                                                                 */
+;/* All rights reserved.                                                                                    */
+;/*                                                                                                         */
+;/*-----------------------------------------------------------------------------------------------------------
+;  File Name        : linker.lin
+;  Version          : V1.10
+;  Date             : 2022-06-01
+;  Description      : Linker Control File (scatter-loading).
+;-----------------------------------------------------------------------------------------------------------*/
+
+AP 0x00000000
+{
+  AP +0
+  {
+    *.o (RESET, +FIRST)
+    * (+RO)
+  }
+  RAM 0x20000100
+  {
+    ram_fun.o
+    ht32f5xxxx_flash.o ; /* For Arm Compiler Version 5 & 6 compatibility                                    */
+
+    ; /* For Arm Compiler Version 5                                                                         */
+    ;*.o (i.FLASH_ErasePage)
+    ;*.o (i.FLASH_ProgramWordData)
+    ;*.o (i.FLASH_WaitForOperationEnd)
+
+    ; /* For Arm Compiler Version 6                                                                         */
+    ;*.o (.text.FLASH_ErasePage)
+    ;*.o (.text.FLASH_ProgramWordData)
+    ;*.o (.text.FLASH_WaitForOperationEnd)
+
+    .ANY (+RW +ZI)
+  }
+}

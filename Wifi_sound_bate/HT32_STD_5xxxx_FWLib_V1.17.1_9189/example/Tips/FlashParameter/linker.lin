@@ -1,0 +1,45 @@
+;/*---------------------------------------------------------------------------------------------------------*/
+;/* Holtek Semiconductor Inc.                                                                               */
+;/*                                                                                                         */
+;/* Copyright (C) Holtek Semiconductor Inc.                                                                 */
+;/* All rights reserved.                                                                                    */
+;/*                                                                                                         */
+;/*-----------------------------------------------------------------------------------------------------------
+;  File Name        : linker.lin
+;  Version          : V1.0
+;  Date             : 2025-01-06
+;  Description      : Linker Control File (scatter-loading).
+;-----------------------------------------------------------------------------------------------------------*/
+
+AP 0x00000000
+{
+  AP +0
+  {
+    *.o (RESET, +FIRST)
+    * (+RO)
+  }
+  RAM 0x20000000
+  {
+    .ANY (+RW +ZI)
+  }
+}
+
+;/* Set the parameter's location in Flash ------------------------------------------------------------------*/
+FLASH_PARDATA_LOAD 0x00004000 0x400
+;FLASH_PARDATA_LOAD 0x00008000 0x400
+{
+  FALSH_PARDATA_EXEC +0
+  {
+    flash_parameters.o
+  }
+}
+
+;/*-----------------------------------------------------------------------------------------------------------
+;  Item Description
+;  Load Region Name               : FLASH_PARDATA_LOAD
+;  Load Region Start Address      : 0x00004000(16K), 0x00008000(32K), etc.
+;  Load Region Size               : 0x400(1K), etc.
+;  Execution Region Name          : FALSH_PARDATA_EXEC
+;  Execution Region Start Address : +0 (Same as Load Region)
+;  Parameter(.o) File             : flash_parameters.o
+;-----------------------------------------------------------------------------------------------------------*/

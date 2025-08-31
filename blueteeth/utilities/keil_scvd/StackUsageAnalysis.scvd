@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component_viewer schemaVersion="0.1" xmlns:xs="http://www.w3.org/2001/XMLSchemainstance" xs:noNamespaceSchemaLocation="Component_Viewer.xsd">
+  <component name="StackUsageAnalysis" version="1.0.1"/>
+  <objects>
+    <object name="HT32 Stack Usage Analysis">
+      <read name="StackStart" type="uint32_t" symbol="_StackStart" />
+      <var name="StackSize" type="int32_t" value="0" />
+      <var name="StackMax" type="int32_t" value="0" />
+      <var name="StackMaxAddr" type="int32_t" value="0" />
+      <var name="StackUsed" type="int32_t" value="0" />
+      <read name="StackEnd" type="uint32_t" symbol="_StackLimit" />
+      <calc>
+        StackSize = StackEnd - StackStart;
+        StackMax = __CalcMemUsed(StackStart, StackSize, 0xCDCDCDCD, 0xABABABAB);
+        StackMaxAddr = StackEnd - (StackMax &amp; 0xFFFFF);
+        StackUsed = StackEnd - __GetRegVal("MSP");
+      </calc>
+      <out name="HT32 Stack Usage Analysis">
+        <item property="Start" value="%x[StackStart]" info="Stack start address." />
+        <item property="End" value="%x[StackEnd]" info="Stack end address." />
+        <item property="Size" value="%x[StackSize] [%d[StackSize]]" info="Stack size in bytes." />
+        <item>
+          <print cond="__Running == 0" property="Used" value="%d[StackUsed*100/StackSize]%% [%d[StackUsed]]" info="Stack usage in % and bytes." />
+          <print cond="__Running == 1" property="Used" value="unknown" info="Stack usage in % and bytes." />
+        </item>
+        <item alert="(StackMax >> 31)" property="Max" value="%d[(StackMax>>20) &amp; 0xFF]%% [%d[StackMax &amp; 0xFFFFF]]" info="Maximum stack usage in % and bytes." />
+        <item property="MaxAddr" value="%x[StackMaxAddr]" info="Maximum stack address. Use BS Write MaxAddr to find the code who use the maximum stack." />
+      </out>
+    </object>
+  </objects>
+</component_viewer>
